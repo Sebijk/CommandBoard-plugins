@@ -1,0 +1,55 @@
+Logout Abfrage 1.0 für Command Board 1.0 - Beta 2.0
+
+Beschreibung: Fragt den Benutzer ob er sich wirklich abmelden will.
+Beim Internet Explorer wird die Webseite bei der Frage in Schwarzweiß gestellt, 
+wie ihr das bei vBulletin kennt.
+---------------------------------------
+Templates, die geändert werden müssen:
+---------------------------------------
+templates/standard/_css.tpl
+---------------------------------------
+
+-------------------------------------
+Dateien, die geändert werden müssen:
+-------------------------------------
+Fast alle
+-------------------------------------
+
+1. Suchen Sie in templates/standard/_css.tpl nach:
+---------------------------------------------
+</style>
+---------------------------------------------
+Und fügen Sie darunter:
+---------------------------------------------
+<script type="text/javascript" language="JavaScript">
+<!--
+function log_out()
+{
+	grayfilter = document.getElementsByTagName("html");
+	grayfilter[0].style.filter = "progid:DXImageTransform.Microsoft.BasicImage(grayscale=1)";
+	if (confirm('Wollen Sie sich wirklich abmelden?\n (OK = Ja | Abbrechen = Nein)'))
+	{ 
+	return true; 
+	}
+	else
+	{
+	  grayfilter[0].style.filter = "";
+	  return false; 
+	  }
+}
+//-->
+</script>
+---------------------------------------------
+ein.
+
+2. Suchen Sie in allen PHP-Dateien nach:
+-------------------------------------------------------------------------------
+$usermenu = "<a href=\"login.php?was=logout&$sid\">Logout</a>";
+-------------------------------------------------------------------------------
+
+ersetzen Sie das in:
+---------------------------------------------
+$usermenu = "<a href=\"login.php?was=logout&$sid\" onclick=\"return log_out()\">Logout</a>";
+---------------------------------------------
+
+ein.

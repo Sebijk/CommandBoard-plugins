@@ -1,0 +1,53 @@
+----------------------------------------------------
+Rechtschreibprüfung im Command Board
+Getestet mit: Command Board 1.0 Beta 2.0
+Original Hack: WBB Rechtschreibprüfung von YooMe.de
+----------------------------------------------------
+
+Mit diesem Addon könnt ihr beim Posten eines Beitrages oder PN 
+euren Text auf Rechtschreibfehler überprüfen.
+
+
+Dateien, die geändert werden müssen:
+-----------------------------------------
+templates/standard/pmaction_new_pm.tpl
+templates/standard/newthread.tpl
+templates/standard/newpost.tpl
+templates/standard/_css.tpl
+
+
+1. Laden Sie alle Dateien auf dem Webspace hoch.
+
+2. Suchen Sie in templates/standard/_css.tpl nach:
+
+</style>
+	
+und fügen Sie darunter:
+
+<script type="text/javascript" src="googiespell/AJS.js"></script>
+<script type="text/javascript" src="googiespell/googiespell.js"></script>
+<script type="text/javascript" src="googiespell/cookiesupport.js"></script>
+<link href="googiespell/googiespell.css" rel="stylesheet" type="text/css" />
+
+ein.
+
+2.1 Suchen Sie in templates/standard/newpost.tpl, templates/standard/newthread.tpl 
+	UND templates/standard/pmaction_new_pm.tpl nach:
+
+<br>
+ &nbsp;<textarea name="message" cols="50" rows="18" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);">{$text}</textarea></td>
+</tr>
+
+
+und ersetzen Sie es mit:
+
+<br>
+ &nbsp;<textarea name="message" cols="50" rows="18" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);" id="ta1">{$text}</textarea></td>
+ <span class="normalfont"> <script type="text/javascript">
+    var googie = new GoogieSpell("googiespell/", "sendReq.php?lang=");
+    googie.setLanguages({'de': 'Deutsch', 'en': 'English'});
+    googie.dontUseCloseButtons();
+     googie.decorateTextarea("ta1");
+  </script> </span>
+</tr>
+
